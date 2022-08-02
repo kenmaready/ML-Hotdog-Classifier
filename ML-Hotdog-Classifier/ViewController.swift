@@ -61,7 +61,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 
 extension ViewController {
     func detect(_ image: CIImage) {
-        guard let model = try? VNCoreMLModel(for: Inceptionv3().model) else {
+        guard let model = try? VNCoreMLModel(for: SqueezeNetFP16().model) else {
             fatalError("Error occurred during instantiation of MLModel")
         }
         
@@ -74,7 +74,7 @@ extension ViewController {
             
             if let firstResult = results.first {
                 if firstResult.identifier.contains("hotdog") {
-                    self.navigationItem.title = "Hot Dog!"
+                    self.navigationItem.title = "Hot Dog! (\(Int(firstResult.confidence * 100.0))%)"
                 } else {
                     self.navigationItem.title = "Not a Hot Dog"
                 }
